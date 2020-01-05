@@ -720,71 +720,16 @@
                     <img src="https://img0.gjw.com/Famous/2019/1228/ad6f02af5b4a4f0d85ccd872401f1698.jpg" alt="">
                 </a>
             </div>
-            <ul class="content-1-list-r">
-                <li>
+            <ul class="content-1-list-r" id="cont1-r">
+                <!-- <li>
                     <a href="#">
                         <div class="top-tip">买一送一</div>
                         <img src="" alt="">
                         <div class="introduce">XXXXXXXX</div>
                         <div class="price">123元</div>
                     </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <div class="top-tip">买一送一</div>
-                        <img src="" alt="">
-                        <div class="introduce">XXXXXXXX</div>
-                        <div class="price">123元</div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <div class="top-tip">买一送一</div>
-                        <img src="" alt="">
-                        <div class="introduce">XXXXXXXX</div>
-                        <div class="price">123元</div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <div class="top-tip">买一送一</div>
-                        <img src="" alt="">
-                        <div class="introduce">XXXXXXXX</div>
-                        <div class="price">123元</div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <div class="top-tip">买一送一</div>
-                        <img src="" alt="">
-                        <div class="introduce">XXXXXXXX</div>
-                        <div class="price">123元</div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <div class="top-tip">买一送一</div>
-                        <img src="" alt="">
-                        <div class="introduce">XXXXXXXX</div>
-                        <div class="price">123元</div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <div class="top-tip">买一送一</div>
-                        <img src="" alt="">
-                        <div class="introduce">XXXXXXXX</div>
-                        <div class="price">123元</div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <div class="top-tip">买一送一</div>
-                        <img src="" alt="">
-                        <div class="introduce">XXXXXXXX</div>
-                        <div class="price">123元</div>
-                    </a>
-                </li>
+                </li> -->
+                
             </ul>
         </div>
     </div>
@@ -881,6 +826,8 @@
 <script src="js/jquery.js"></script>
 <!-- <script src="js/move.js"></script> -->
 <script src="js/jquery.banner.1.0.js"></script>
+<script src="js/ajax.js"></script>
+<script src="js/cookie.js"></script>
 <script>
     $(".bbanner").banner({
         //必传,数组,图片路径
@@ -892,5 +839,37 @@
         moveTime:500,           //可选，默认为200
         index:0                 //可选，默认为0
     });
+
+    class List{
+        constructor(){
+            this.cont1r = document.querySelector("#cont1-r");
+            this.url = "http://127.0.0.3:82/goods1.json";
+            this.load();
+        }
+        load(){
+            var that = this;
+            $.get(this.url,function(res){
+                that.res = JSON.parse(res);
+                that.display();
+                console.log(res)
+            })
+        }
+        display(){
+            // console.log(this.res)
+            var str = "";
+            for(var i=0;i<this.res.length;i++){
+                str += `<li>
+                            <a href="#">
+                                <div class="top-tip">${this.res[i].tip}</div>
+                                <img src="${this.res[i].img}" alt="">
+                                <div class="introduce">${this.res[i].name}</div>
+                                <div class="price">${this.res[i].pirce}</div>
+                            </a>
+                        </li>`;
+            }
+            $("#cont1-r")[0].innerHTML = str;
+        }
+    }
+    new List();
 </script>
 </html>
